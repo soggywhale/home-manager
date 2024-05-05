@@ -32,6 +32,8 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
+  
+  home.sessionVariables.GTK_THEME = "Lavanda-Dark";
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -64,7 +66,7 @@
     # ".screenrc".source = dotfiles/screenrc;
 
     # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
+    # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
@@ -94,7 +96,7 @@
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
       shellAliases = {
-        update = "sudo nixos-rebuild switch --flake r#default";
+        update = "sudo nixos-rebuild switch --flake ~/.dotfiles/nixos#default";
       };
       history.size = 10000;
       history.path = "${config.xdg.dataHome}/zsh/history";
@@ -104,12 +106,23 @@
       enableZshIntegration = true;
       settings = {
         add_newline = false;
+        right_format = lib.concatStrings [
+          "[](fg:white)"
+          "$git_branch"
+          "$time"
+        ];
         format = lib.concatStrings [
+    "$os"
     "$package"
-    "git_branch"
+    "$nix_shell"
     "$directory"
     "$character"
   ];
+      time = {
+          format = "[](fg:cyan bg:white)[🕒](bg:cyan fg:red)[](fg:cyan bg:white)[$time](fg:black bg:white)[](fg:white)";
+          disabled = false;
+          time_format = "%H:%M";
+        };
       character = {
           success_symbol = "[🐳](bg:red)[](fg:red)";
           error_symbol = "[🐋](bg:red)[](fg:red)";
@@ -120,8 +133,8 @@
         };
       git_branch = {
           format = "[$symbol$branch]($style)";
-          style = "fg:blue";
-          symbol = " ";
+          style = "fg:green bg:white";
+          symbol = "  ";
         };
       git_status = {
           format  = "[$conflicted$deleted$renamed$staged$untracked$modified$diverged$behind$ahead]($style)";
@@ -136,8 +149,14 @@
           staged = "●";
           untracked = "…";
         };
+        os = {
+            disabled = false;
+            format = "[](fg:purple)[$symbol$kernel]($style)[](fg:purple bg:blue)";
+            style = "bold bg:purple";
+          };
       };
          };
+
     zoxide = {
       enable = true;
       enableZshIntegration = true;
@@ -145,9 +164,13 @@
     waybar = {
       enable = true;
     };
+    eww = {
+        enable = true;
+        configDir = "${config.xdg.configHome}/eww";
+      };
     kitty = {
       enable = true;
-      font.name = "SFMono Nerd Font";
+      font.name = "Cascadia Mono NF";
       font.size = 17;
       shellIntegration.enableZshIntegration = true;
       extraConfig = "
@@ -170,7 +193,7 @@ include $HOME/.cache/wal/colors-kitty.conf
 	";
     };};
 
-    programs.pywal.enable = true;
+  programs.pywal.enable = true;
       xdg.configFile."lf/icons".source = ./icons;
 
   programs.lf = {
