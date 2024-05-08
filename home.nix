@@ -14,14 +14,13 @@
   home.sessionPath = [
     "$HOME/.local/bin"
   ];
-
   programs.git = {
     enable = true;
     userName = "soggywhale";
     userEmail = "soggywhale@proton.me";
     extraConfig = {
-      init.defaultBranch = "main";
-      safe.directory = "/etc/nixos";
+      init.defaultBrunch = "main";
+      safe.directory = "~/.dotfiles/nixos/";
     };
   };
   # This value determines the Home Manager release that your configuration is
@@ -41,7 +40,9 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     pkgs.hello
+    pkgs.speedtest-cli
     pkgs.mako
+    pkgs.foot
     pkgs.libnotify
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -97,9 +98,11 @@
       historySubstringSearch.enable = true;
       shellAliases = {
         update = "sudo nixos-rebuild switch --flake ~/.dotfiles/nixos#default";
+        whatsmyip = "curl ifconfig.me";
       };
       history.size = 10000;
       history.path = "${config.xdg.dataHome}/zsh/history";
+      envExtra = "XDG_SCREENSHOT_DIR=~/Pictures/Screenshots/";
     };
     starship = {
       enable = true;
@@ -112,12 +115,12 @@
           "$time"
         ];
         format = lib.concatStrings [
-    "$os"
-    "$package"
-    "$nix_shell"
-    "$directory"
-    "$character"
-  ];
+          "$os"
+          "$package"
+          "$nix_shell"
+          "$directory"
+          "$character"
+        ];
       time = {
           format = "[](fg:cyan bg:white)[🕒](bg:cyan fg:red)[](fg:cyan bg:white)[$time](fg:black bg:white)[](fg:white)";
           disabled = false;
@@ -164,34 +167,32 @@
     waybar = {
       enable = true;
     };
-    eww = {
-        enable = true;
-        configDir = "${config.xdg.configHome}/eww";
-      };
     kitty = {
       enable = true;
       font.name = "Cascadia Mono NF";
-      font.size = 17;
+      font.size = 19;
       shellIntegration.enableZshIntegration = true;
       extraConfig = "
-	tab_bar_min_tabs            1
-tab_bar_edge                bottom
-tab_bar_style               powerline
-tab_powerline_style         slanted
-tab_title_template          {title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}
+      	tab_bar_min_tabs            1
+        tab_bar_edge                bottom
+        tab_bar_style               powerline
+        tab_powerline_style         slanted
+        tab_title_template          {title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}
 
 
-window_padding_width 5
-background_opacity 0.77
+        window_padding_width 5
+        background_opacity 0.77
 
-confirm_os_window_close 0
+        confirm_os_window_close 0
 
-# BEGIN_KITTY_THEME
-# Catppuccin-Macchiato
-include $HOME/.cache/wal/colors-kitty.conf
-# END_KITTY_THEME
-	";
-    };};
+        # BEGIN_KITTY_THEME
+        # Catppuccin-Macchiato
+        include $HOME/.cache/wal/colors-kitty.conf
+        # END_KITTY_THEME
+	      ";
+    };
+     
+};
 
   programs.pywal.enable = true;
       xdg.configFile."lf/icons".source = ./icons;
