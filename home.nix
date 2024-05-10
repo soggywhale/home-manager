@@ -44,6 +44,7 @@
     pkgs.mako
     pkgs.foot
     pkgs.libnotify
+    pkgs.ripgrep
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -289,6 +290,7 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    VISUAL = "nvim";
   };
 
   # Let Home Manager install and manage itself.
