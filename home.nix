@@ -93,7 +93,7 @@
     zsh = {
       enable = true;
       enableCompletion = true;
-      autosuggestion.enable = true;
+      enableAutosuggestions = true;
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
       shellAliases = {
@@ -190,9 +190,9 @@
         include $HOME/.cache/wal/colors-kitty.conf
         # END_KITTY_THEME
 	      ";
-    };
-     
-};
+      };
+ };
+
 
   programs.pywal.enable = true;
       xdg.configFile."lf/icons".source = ./icons;
