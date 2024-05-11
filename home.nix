@@ -45,6 +45,7 @@
     pkgs.foot
     pkgs.libnotify
     pkgs.ripgrep
+    pkgs.hyprcursor
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -98,7 +99,7 @@
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
       shellAliases = {
-        update = "sudo nixos-rebuild switch --flake ~/.dotfiles/nixos#default";
+        update = "sudo nixos-rebuild switch -I nixos-config=$HOME/.dotfiles/nixos/configuration.nix";
         whatsmyip = "curl ifconfig.me";
       };
       history.size = 10000;
@@ -291,6 +292,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+    NIX_PATH = "$NIX_PATH:/home/whale/.dotfiles/nixos";
   };
 
   # Let Home Manager install and manage itself.
